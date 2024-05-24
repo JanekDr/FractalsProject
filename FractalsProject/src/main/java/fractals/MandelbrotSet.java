@@ -1,19 +1,17 @@
 package fractals;
 
 import java.awt.*;
-import java.awt.event.*;
 
-public class MandelbrotSet extends Fractal implements MouseListener, MouseMotionListener, MouseWheelListener {
-    private int mouseX, mouseY;
-    private boolean dragging = false;
-    private int dragStartX, dragStartY;
-
+public class MandelbrotSet extends Fractal{
     public MandelbrotSet(int width, int height) {
         super(width, height);
         this.maxIterations = 1000;
-        addMouseListener(this);
-        addMouseMotionListener(this);
-        addMouseWheelListener(this);
+        generateFractal();
+    }
+
+    public MandelbrotSet(int width, int height, int maxIterations) {
+        super(width, height);
+        this.maxIterations = maxIterations;
         generateFractal();
     }
 
@@ -52,63 +50,12 @@ public class MandelbrotSet extends Fractal implements MouseListener, MouseMotion
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, this);
-        if (dragging) {
+        if (mouseHandler.isDragging()) {
             g.setColor(Color.WHITE);
-            g.drawRect(Math.min(mouseX, dragStartX), Math.min(mouseY, dragStartY),
-                    Math.abs(mouseX - dragStartX), Math.abs(mouseY - dragStartY));
+            g.drawRect(Math.min(mouseHandler.getMouseX(), mouseHandler.getDragStartX()),
+                    Math.min(mouseHandler.getMouseY(), mouseHandler.getDragStartY()),
+                    Math.abs(mouseHandler.getMouseX() - mouseHandler.getDragStartX()),
+                    Math.abs(mouseHandler.getMouseY() - mouseHandler.getDragStartY()));
         }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        dragging = true;
-        dragStartX = mouseX = e.getX();
-        dragStartY = mouseY = e.getY();
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        dragging = false;
-        double minX = Math.min(dragStartX, mouseX);
-        double minY = Math.min(dragStartY, mouseY);
-        double maxX = Math.max(dragStartX, mouseX);
-        double maxY = Math.max(dragStartY, mouseY);
-        double centerX = (minX + maxX) / 2;
-        double centerY = (minY + maxY) / 2;
-        offsetX += centerX / zoom - width / 2.0 / zoom;
-        offsetY += centerY / zoom - height / 2.0 / zoom;
-        generateFractal();
-        repaint();
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        mouseX = e.getX();
-        mouseY = e.getY();
-        repaint();
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {}
-
-    @Override
-    public void mouseClicked(MouseEvent e) {}
-
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-
-    @Override
-    public void mouseExited(MouseEvent e) {}
-
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent e) {
-        int notches = e.getWheelRotation();
-        if (notches < 0) {
-            zoom *= 1.1;
-        } else {
-            zoom /= 1.1;
-        }
-        generateFractal();
-        repaint();
     }
 }

@@ -1,11 +1,14 @@
 package main;
 
-import fractals.MandelbrotSet;
-
 import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-//        tutaj bedzie sie wywolywac gui ktore bedzie sterowalo wyborem fraktala i jego parametrow
+        JFrame frame = new JFrame("Mandelbrot Set");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(new fractals.BarnsleyFern(800,600));
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 }

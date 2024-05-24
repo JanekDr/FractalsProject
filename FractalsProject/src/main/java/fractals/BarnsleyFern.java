@@ -1,19 +1,26 @@
-import javax.swing.*;
+package fractals;
+
 import java.awt.*;
 
+public class BarnsleyFern extends Fractal {
 
-public class BarnsleyFern extends JPanel {
-
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 800;
-    private static final int ITERATIONS = 1000000;
     private double x = 0, y = 0;
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public BarnsleyFern(int width, int height) {
+        super(width, height);
+        this.maxIterations = 1000000;
+        generateFractal();
+    }
 
-        for (int i = 0; i < ITERATIONS; i++) {
+    public BarnsleyFern(int width, int height, int maxIterations) {
+        super(width, height);
+        this.maxIterations = maxIterations;
+        generateFractal();
+    }
+
+    @Override
+    protected void generateFractal() {
+        for (int i = 0; i < maxIterations; i++) {
             double nextX, nextY;
             double rand = Math.random();
 
@@ -34,18 +41,15 @@ public class BarnsleyFern extends JPanel {
             x = nextX;
             y = nextY;
 
-            int plotX = (int) (WIDTH / 2 + x * WIDTH / 10);
-            int plotY = (int) (HEIGHT - y * HEIGHT / 12);
-            g.drawLine(plotX, plotY, plotX, plotY);
+            int plotX = (int) (width / 2 + x * width / 10);
+            int plotY = (int) (height - y * height / 12);
+            image.setRGB(plotX, plotY, Color.GREEN.getRGB());
         }
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Barnsley Fern");
-        BarnsleyFern fern = new BarnsleyFern();
-        frame.add(fern);
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image, 0, 0, this);
     }
 }
