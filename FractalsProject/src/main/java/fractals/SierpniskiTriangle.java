@@ -8,7 +8,7 @@ public class SierpniskiTriangle extends Fractal{
     }
 
     @Override
-    protected void generateFractal() {
+    public void generateFractal() {
     }
 
     @Override

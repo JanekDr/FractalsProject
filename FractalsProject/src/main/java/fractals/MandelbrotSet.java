@@ -16,7 +16,7 @@ public class MandelbrotSet extends Fractal{
     }
 
     @Override
-    protected void generateFractal() {
+    public void generateFractal() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 double cX = (x - width / 2) / zoom + offsetX;

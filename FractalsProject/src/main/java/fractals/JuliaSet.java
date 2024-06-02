@@ -12,7 +12,7 @@ public class JuliaSet extends Fractal{
     }
 
     @Override
-    protected void generateFractal() {
+    public void generateFractal() {
     }
     @Override
     protected void paintComponent(Graphics g) {

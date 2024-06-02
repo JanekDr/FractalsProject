@@ -19,7 +19,7 @@ public class BarnsleyFern extends Fractal {
     }
 
     @Override
-    protected void generateFractal() {
+    public void generateFractal() {
         for (int i = 0; i < maxIterations; i++) {
             double nextX, nextY;
             double rand = Math.random();

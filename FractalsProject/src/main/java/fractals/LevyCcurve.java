@@ -8,7 +8,7 @@ public class LevyCcurve extends Fractal{
     }
 
     @Override
-    protected void generateFractal() {
+    public void generateFractal() {
     }
 
     @Override

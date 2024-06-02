@@ -8,7 +8,7 @@ public class KochSnowflake extends Fractal{
     }
 
     @Override
-    protected void generateFractal() {
+    public void generateFractal() {
 
     }
 

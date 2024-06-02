@@ -8,7 +8,7 @@ public class DragonCurve extends Fractal{
     }
 
     @Override
-    protected void generateFractal() {
+    public void generateFractal() {
 
     }
 

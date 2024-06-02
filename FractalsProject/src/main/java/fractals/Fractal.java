@@ -29,5 +29,5 @@ public abstract class Fractal extends JPanel {
         setPreferredSize(new Dimension(width, height));
     }
 
-    protected abstract void generateFractal();
+    public abstract void generateFractal();
 }

@@ -1,7 +1,14 @@
 package GUI;
 
+import fractals.BarnsleyFern;
+import fractals.MandelbrotSet;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import fractals.Fractal;
 
 
 public class GUI extends JFrame {
@@ -16,6 +23,8 @@ public class GUI extends JFrame {
     private ImageIcon checkIcon;
     private JButton Submit_button;
     private JButton Scroll_Submit_Button;
+    private Fractal fractalPanel;
+
     private static JComboBox<String> CreateComboBox(String[] options,int x, int y, int width, int height){
         JComboBox<String> list = new JComboBox<>(options);
         list.setBounds(x,y,width,height);
@@ -48,7 +57,7 @@ public class GUI extends JFrame {
         setSize(800,500);
         setLayout(null);
 
-        Fractal_list = CreateComboBox(new String[]{"Mandelbrot", "Drzewo", "Fraktal3"},200,0,585,30);
+        Fractal_list = CreateComboBox(new String[]{"Mandelbrot", "Drzewo", "BarnsleyFern"},200,0,585,30);
         add(Fractal_list);
 
         levels = CreateLabel("Poziom",75,75,200,25);
@@ -77,15 +86,37 @@ public class GUI extends JFrame {
         Submit_button = CreateButton("Narysuj",-2,400,200,62,new Color(150,50,50), new Color(255,255,255));
         add(Submit_button);
 
+        fractalPanel = new BarnsleyFern(400, 400);
+        fractalPanel.setBounds(300, 50, 500, 400);
+        add(fractalPanel);
 
 
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
-
+        Submit_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateFractal();
+            }
+        });
     }
+    private void updateFractal() {
+        String fractalName = Fractal_list.getSelectedItem().toString();
+        getContentPane().remove(fractalPanel);
+        if(fractalName=="Mandelbrot"){
+            System.out.println(fractalName);
+            fractalPanel = new MandelbrotSet(400,400);
+        } else if(fractalName == "BarnsleyFern"){
+            System.out.println(fractalName);
+            fractalPanel = new BarnsleyFern(400,400);
+        }
 
+        fractalPanel.setBounds(300, 50, 500, 400);
+        add(fractalPanel);
+        repaint();
+    }
     public static void main(String[] args) {
         new GUI();
     }
