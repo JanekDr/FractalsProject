@@ -25,6 +25,7 @@ public class MandelbrotSet extends Fractal{
                 if (iter > 0) {
                     double ratio = (double) iter / maxIterations;
                     int color = Color.HSBtoRGB(0.7f + 10 * (float) Math.sqrt(ratio), 1f, 1f);
+//                    int color = Color.HSBtoRGB(1f,1f,1f);
                     image.setRGB(x, y, color);
                 } else {
                     image.setRGB(x, y, Color.BLACK.getRGB());

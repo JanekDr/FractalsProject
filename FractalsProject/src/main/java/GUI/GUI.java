@@ -1,14 +1,11 @@
 package GUI;
 
-import fractals.BarnsleyFern;
-import fractals.MandelbrotSet;
+import fractals.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import fractals.Fractal;
 
 
 public class GUI extends JFrame {
@@ -57,7 +54,7 @@ public class GUI extends JFrame {
         setSize(800,500);
         setLayout(null);
 
-        Fractal_list = CreateComboBox(new String[]{"Mandelbrot", "Drzewo", "BarnsleyFern"},200,0,585,30);
+        Fractal_list = CreateComboBox(new String[]{"MandelbrotSet", "BarnsleyFern", "DragonCurve", "JuliaSet", "KochSnowflake", "LevyCurve", "SierpinskiTriangle"},200,0,585,30);
         add(Fractal_list);
 
         levels = CreateLabel("Poziom",75,75,200,25);
@@ -66,7 +63,7 @@ public class GUI extends JFrame {
         add(levels_text_field);
 
         text_Color = CreateLabel("Kolor",75,175,200,25);
-        Color_list = CreateComboBox(new String[]{"Czarny", "Czerwony", "Niebieski"},0,200,200,25);
+        Color_list = CreateComboBox(new String[]{"Gradient", "Bialy", "Czerwony", "Niebieski", "Zielony"},0,200,200,25);
         add(text_Color);
         add(Color_list);
 
@@ -105,14 +102,44 @@ public class GUI extends JFrame {
     private void updateFractal() {
         String fractalName = Fractal_list.getSelectedItem().toString();
         getContentPane().remove(fractalPanel);
-        if(fractalName=="Mandelbrot"){
-            System.out.println(fractalName);
-            fractalPanel = new MandelbrotSet(400,400);
-        } else if(fractalName == "BarnsleyFern"){
-            System.out.println(fractalName);
-            fractalPanel = new BarnsleyFern(400,400);
-        }
+        String colorName = Color_list.getSelectedItem().toString();
+//        if(levels_text_field.isValidateRoot()) {
+//            int maxIterations = Integer.parseInt(levels_text_field.getText());
+//            System.out.println(maxIterations);
+//        }
+        System.out.println(colorName);
 
+
+        switch (fractalName) {
+            case "MandelbrotSet":
+                System.out.println(fractalName);
+                fractalPanel = new MandelbrotSet(400, 400);
+                break;
+            case "BarnsleyFern":
+                System.out.println(fractalName);
+                fractalPanel = new BarnsleyFern(400, 400);
+                break;
+            case "DragonCurve":
+                System.out.println(fractalName);
+                fractalPanel = new DragonCurve(400, 400);
+                break;
+            case "JuliaSet":
+                System.out.println(fractalName);
+                fractalPanel = new JuliaSet(400, 400);
+                break;
+            case "KochSnowflake":
+                System.out.println(fractalName);
+                fractalPanel = new KochSnowflake(400, 400);
+                break;
+            case "LevyCcurve":
+                System.out.println(fractalName);
+                fractalPanel = new LevyCcurve(400, 400);
+                break;
+            case "SierpinskiTriangle":
+                System.out.println(fractalName);
+                fractalPanel = new SierpniskiTriangle(400, 400);
+                break;
+        }
         fractalPanel.setBounds(300, 50, 500, 400);
         add(fractalPanel);
         repaint();
