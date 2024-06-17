@@ -11,10 +11,12 @@ import java.awt.event.ActionListener;
 public class GUI extends JFrame {
     private JComboBox<String> Fractal_list;
     private JComboBox<String> Color_list;
+    private JComboBox<String> JuliaConstant_list;
 
     private JLabel levels;
     private JTextField levels_text_field;
     private JLabel text_Color;
+    private JLabel JuliaConstant_label;
     private JCheckBox AutoScroll_CheckBox;
     private ImageIcon xIcon;
     private ImageIcon checkIcon;
@@ -51,10 +53,10 @@ public class GUI extends JFrame {
 
     public GUI (){
         setTitle("Fraktale");
-        setSize(800,500);
+        setSize(1200,800);
         setLayout(null);
 
-        Fractal_list = CreateComboBox(new String[]{"MandelbrotSet", "BarnsleyFern", "DragonCurve", "JuliaSet", "KochSnowflake", "LevyCurve", "SierpinskiTriangle"},200,0,585,30);
+        Fractal_list = CreateComboBox(new String[]{"MandelbrotSet", "BarnsleyFern", "DragonCurve", "JuliaSet", "KochSnowflake", "LevyCurve", "SierpinskiTriangle"},0,30,200,30);
         add(Fractal_list);
 
         levels = CreateLabel("Poziom",75,75,200,25);
@@ -76,15 +78,27 @@ public class GUI extends JFrame {
         AutoScroll_CheckBox.setFocusable(false);
         //AutoScroll_CheckBox.setIcon(xIcon);
         //AutoScroll_CheckBox.setSelectedIcon(checkIcon);
-        AutoScroll_CheckBox.setBounds(40,275,200,25);
+        AutoScroll_CheckBox.setBounds(40,275,100,25);
         add(AutoScroll_CheckBox);
 
+        JuliaConstant_label = CreateLabel("<html>Stale liczby zespolone<br> dla zbioru Julii (beda dostepne<br>po wyborze tego fraktalu)</html>"
+                , 0, 450, 200, 50);
+        JuliaConstant_list = CreateComboBox(new String[]{
+                "c = -0.7 + 0.27015i",
+                "c = 0.355 + 0.355i",
+                "c = -0.4 + 0.6i",
+                "c = -0.73 + 0.19i"
+        }, 0, 500, 200, 25);
+        add(JuliaConstant_label);
+        add(JuliaConstant_list);
+        JuliaConstant_list.setEnabled(false);
 
-        Submit_button = CreateButton("Narysuj",-2,400,200,62,new Color(150,50,50), new Color(255,255,255));
+
+        Submit_button = CreateButton("Narysuj",2,700,200,60,new Color(150,50,50), new Color(255,255,255));
         add(Submit_button);
 
-        fractalPanel = new BarnsleyFern(400, 400);
-        fractalPanel.setBounds(300, 50, 500, 400);
+        fractalPanel = new MandelbrotSet(900, 750);
+        fractalPanel.setBounds(250, 30, 900, 700);
         add(fractalPanel);
 
 
@@ -100,49 +114,124 @@ public class GUI extends JFrame {
         });
     }
     private void updateFractal() {
+        int maxIterations;
+
         String fractalName = Fractal_list.getSelectedItem().toString();
         getContentPane().remove(fractalPanel);
         String colorName = Color_list.getSelectedItem().toString();
-//        if(levels_text_field.isValidateRoot()) {
-//            int maxIterations = Integer.parseInt(levels_text_field.getText());
-//            System.out.println(maxIterations);
-//        }
         System.out.println(colorName);
 
+        try{
+            maxIterations = Integer.parseInt(levels_text_field.getText());
+            System.out.println(maxIterations);
+        } catch (Exception noValue){
+            maxIterations = 0;
+            System.out.println(maxIterations);
+        }
+        System.out.println(fractalName);
 
+        JuliaConstant_list.setEnabled(false);
         switch (fractalName) {
             case "MandelbrotSet":
-                System.out.println(fractalName);
-                fractalPanel = new MandelbrotSet(400, 400);
+                if(maxIterations!=0){
+                    fractalPanel = new MandelbrotSet(900, 750, maxIterations);
+                }else {
+                    fractalPanel = new MandelbrotSet(900, 750);
+                }
                 break;
             case "BarnsleyFern":
-                System.out.println(fractalName);
-                fractalPanel = new BarnsleyFern(400, 400);
+                if(maxIterations!=0){
+                    fractalPanel = new BarnsleyFern(900, 750, maxIterations);
+                }else {
+                    fractalPanel = new BarnsleyFern(900, 750);
+                }
                 break;
             case "DragonCurve":
-                System.out.println(fractalName);
-                fractalPanel = new DragonCurve(400, 400);
+                if(maxIterations!=0){
+                    fractalPanel = new DragonCurve(900, 750, maxIterations);
+                }else {
+                    fractalPanel = new DragonCurve(900, 750);
+                }
                 break;
             case "JuliaSet":
-                System.out.println(fractalName);
-                fractalPanel = new JuliaSet(400, 400);
+                JuliaConstant_list.setEnabled(true);
+
+                String selectedConstant = (String) JuliaConstant_list.getSelectedItem();
+                double cRe=-0.7;;
+                double cIm=0.27015;
+                switch (selectedConstant) {
+                    case "c = -0.7 + 0.27015i":
+                        cRe = -0.7;
+                        cIm = 0.27015;
+                        break;
+                    case "c = 0.355 + 0.355i":
+                        cRe = 0.355;
+                        cIm = 0.355;
+                        break;
+                    case "c = -0.4 + 0.6i":
+                        cRe = -0.4;
+                        cIm = 0.6;
+                        break;
+                    case "c = -0.73 + 0.19i":
+                        cRe = -0.73;
+                        cIm = 0.19;
+                        break;
+                }
+                System.out.println(cRe+" "+ cIm);
+                if(maxIterations!=0){
+                    fractalPanel = new JuliaSet(900, 750, cRe, cIm, maxIterations);
+                }else {
+                    fractalPanel = new JuliaSet(900, 750, cRe, cIm);
+                }
+
                 break;
             case "KochSnowflake":
-                System.out.println(fractalName);
-                fractalPanel = new KochSnowflake(400, 400);
+                if(maxIterations!=0){
+                    fractalPanel = new KochSnowflake(900, 750, maxIterations);
+                }else {
+                    fractalPanel = new KochSnowflake(900, 750);
+                }
                 break;
             case "LevyCcurve":
-                System.out.println(fractalName);
-                fractalPanel = new LevyCcurve(400, 400);
+                if(maxIterations!=0){
+                    fractalPanel = new LevyCcurve(900, 750, maxIterations);
+                }else {
+                    fractalPanel = new LevyCcurve(900, 750);
+                }
                 break;
             case "SierpinskiTriangle":
-                System.out.println(fractalName);
-                fractalPanel = new SierpniskiTriangle(400, 400);
+                if(maxIterations!=0){
+                    fractalPanel = new SierpinskiTriangle(900, 750, maxIterations);
+                }else {
+                    fractalPanel = new SierpinskiTriangle(900, 750);
+                }
                 break;
         }
-        fractalPanel.setBounds(300, 50, 500, 400);
+        fractalPanel.setBounds(250, 30, 900, 700);
         add(fractalPanel);
         repaint();
+    }
+    private int selectedColor(){
+        String selectedColor = (String) Color_list.getSelectedItem();
+        int color=0;
+        switch (selectedColor){
+            case "Gradient":
+                color=1; //symbol dla gradientu
+                break;
+            case "Bialy":
+                color = Color.WHITE.getRGB();
+                break;
+            case "Czerwony":
+                color = Color.RED.getRGB();
+                break;
+            case "Niebieski":
+                color = Color.BLUE.getRGB();
+                break;
+            case "Zielony":
+                color = Color.GREEN.getRGB();
+                break;
+        }
+        return color;
     }
     public static void main(String[] args) {
         new GUI();

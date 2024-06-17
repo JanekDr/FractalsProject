@@ -10,6 +10,11 @@ public class LevyCcurve extends Fractal {
         this.maxIterations = 10;
         generateFractal();
     }
+    public LevyCcurve(int width, int height, int maxIterations) {
+        super(width, height);
+        this.maxIterations = maxIterations;
+        generateFractal();
+    }
 
     @Override
     public void generateFractal() {
@@ -40,12 +45,5 @@ public class LevyCcurve extends Fractal {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, this);
-        if (mouseHandler.isDragging()) {
-            g.setColor(Color.WHITE);
-            g.drawRect(Math.min(mouseHandler.getMouseX(), mouseHandler.getDragStartX()),
-                    Math.min(mouseHandler.getMouseY(), mouseHandler.getDragStartY()),
-                    Math.abs(mouseHandler.getMouseX() - mouseHandler.getDragStartX()),
-                    Math.abs(mouseHandler.getMouseY() - mouseHandler.getDragStartY()));
-        }
     }
 }

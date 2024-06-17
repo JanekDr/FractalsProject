@@ -6,12 +6,14 @@ import java.awt.geom.Line2D;
 public class DragonCurve extends Fractal {
     public DragonCurve(int width, int height) {
         super(width, height);
+        this.zoom=250;
         this.maxIterations = 10;
         generateFractal();
     }
 
     public DragonCurve(int width, int height, int maxIterations) {
         super(width, height);
+        this.zoom=250;
         this.maxIterations = maxIterations;
         generateFractal();
     }
@@ -20,8 +22,8 @@ public class DragonCurve extends Fractal {
     public void generateFractal() {
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        double startX = 115;
-        double startY = 200;
+        double startX = 230;
+        double startY = 300;
         double endX = 3*startX;
         double endY = 200;
         drawDragonCurve(g2d, startX, startY, endX, endY, maxIterations);

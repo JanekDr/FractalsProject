@@ -2,22 +2,19 @@ package fractals;
 
 import java.awt.*;
 
-public class KochSnowflake extends Fractal{
-    public KochSnowflake(int width, int height) {
+public class SierpinskiTriangle extends Fractal{
+    public SierpinskiTriangle(int width, int height) {
         super(width, height);
-        this.maxIterations = 10;
         generateFractal();
     }
-    public KochSnowflake(int width, int height, int maxIterations) {
+    public SierpinskiTriangle(int width, int height, int maxIterations) {
         super(width, height);
         this.maxIterations = maxIterations;
         generateFractal();
     }
 
-
     @Override
     public void generateFractal() {
-
     }
 
     @Override
