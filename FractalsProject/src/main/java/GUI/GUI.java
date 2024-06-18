@@ -56,16 +56,18 @@ public class GUI extends JFrame {
         setSize(1200,800);
         setLayout(null);
 
-        Fractal_list = CreateComboBox(new String[]{"MandelbrotSet", "BarnsleyFern", "DragonCurve", "JuliaSet", "KochSnowflake", "LevyCurve", "SierpinskiTriangle"},0,30,200,30);
+        Fractal_list = CreateComboBox(new String[]{"MandelbrotSet", "BarnsleyFern", "DragonCurve", "JuliaSet", "KochSnowflake", "LevyCurve", "SierpinskiTriangle"},
+                20,30,200,30);
         add(Fractal_list);
 
-        levels = CreateLabel("Poziom",75,75,200,25);
-        levels_text_field = CreateTextField(0,100,200,25);
+        levels = CreateLabel("Poziom",95,75,200,25);
+        levels_text_field = CreateTextField(20,100,200,25);
         add(levels);
         add(levels_text_field);
 
-        text_Color = CreateLabel("Kolor",75,175,200,25);
-        Color_list = CreateComboBox(new String[]{"Gradient", "Bialy", "Czerwony", "Niebieski", "Zielony"},0,200,200,25);
+        text_Color = CreateLabel("Kolor",95,175,200,25);
+        Color_list = CreateComboBox(new String[]{"Gradient", "Bialy", "Czerwony", "Niebieski", "Zielony"},
+                20,200,200,25);
         add(text_Color);
         add(Color_list);
 
@@ -78,23 +80,23 @@ public class GUI extends JFrame {
         AutoScroll_CheckBox.setFocusable(false);
         //AutoScroll_CheckBox.setIcon(xIcon);
         //AutoScroll_CheckBox.setSelectedIcon(checkIcon);
-        AutoScroll_CheckBox.setBounds(40,275,100,25);
+        AutoScroll_CheckBox.setBounds(60,275,100,25);
         add(AutoScroll_CheckBox);
 
         JuliaConstant_label = CreateLabel("<html>Stale liczby zespolone<br> dla zbioru Julii (beda dostepne<br>po wyborze tego fraktalu)</html>"
-                , 0, 450, 200, 50);
+                , 20, 450, 200, 50);
         JuliaConstant_list = CreateComboBox(new String[]{
                 "c = -0.7 + 0.27015i",
                 "c = 0.355 + 0.355i",
                 "c = -0.4 + 0.6i",
                 "c = -0.73 + 0.19i"
-        }, 0, 500, 200, 25);
+        }, 20, 500, 200, 25);
         add(JuliaConstant_label);
         add(JuliaConstant_list);
         JuliaConstant_list.setEnabled(false);
 
 
-        Submit_button = CreateButton("Narysuj",2,700,200,60,new Color(150,50,50), new Color(255,255,255));
+        Submit_button = CreateButton("Narysuj",20,670,200,60,new Color(150,50,50), new Color(255,255,255));
         add(Submit_button);
 
         fractalPanel = new MandelbrotSet(900, 750);
@@ -113,6 +115,8 @@ public class GUI extends JFrame {
             }
         });
     }
+
+
     private void updateFractal() {
         int maxIterations;
 
@@ -207,6 +211,7 @@ public class GUI extends JFrame {
                 }
                 break;
         }
+        levels_text_field.setText("");
         fractalPanel.setBounds(250, 30, 900, 700);
         add(fractalPanel);
         repaint();

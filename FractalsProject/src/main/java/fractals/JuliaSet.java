@@ -26,7 +26,7 @@ public class JuliaSet extends Fractal {
     public JuliaSet(int width, int height, double cRe, double cIm, int maxIterations) {
         super(width, height);
         this.zoom=250;
-        this.maxIterations = maxIterations;
+        this.maxIterations = 1000*maxIterations;
         this.cRe = cRe;
         this.cIm = cIm;
         generateFractal();
