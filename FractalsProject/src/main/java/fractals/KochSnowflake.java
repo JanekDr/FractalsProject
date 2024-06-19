@@ -2,7 +2,17 @@ package fractals;
 
 import java.awt.*;
 
+/**
+ * Klasa reprezentująca fraktal płatka śniegu Kocha.
+ */
 public class KochSnowflake extends Fractal {
+
+    /**
+     * Konstruktor płatka śniegu Kocha o podanej szerokości i wysokości.
+     *
+     * @param width  szerokość fraktala
+     * @param height wysokość fraktala
+     */
     public KochSnowflake(int width, int height) {
         super(width, height);
         this.maxIterations = 5;
@@ -10,6 +20,14 @@ public class KochSnowflake extends Fractal {
         generateFractal();
     }
 
+    /**
+     * Konstruktor płatka śniegu Kocha o podanych parametrach.
+     *
+     * @param width         szerokość fraktala
+     * @param height        wysokość fraktala
+     * @param maxIterations maksymalna liczba iteracji
+     * @param color         schemat kolorów fraktala
+     */
     public KochSnowflake(int width, int height, int maxIterations, int color) {
         super(width, height);
         this.maxIterations = maxIterations;
@@ -18,10 +36,13 @@ public class KochSnowflake extends Fractal {
         generateFractal();
     }
 
+    /**
+     * Generuje fraktal płatka śniegu Kocha.
+     */
     @Override
     public void generateFractal() {
         Graphics2D g2d = image.createGraphics();
-        if(color==1)color=-1;
+        if (color == 1) color = -1;
         g2d.setColor(new Color(color));
         g2d.fillRect(0, 0, width, height);
         g2d.setColor(Color.BLACK);
@@ -41,6 +62,16 @@ public class KochSnowflake extends Fractal {
         g2d.dispose();
     }
 
+    /**
+     * Rysuje płatek śniegu Kocha.
+     *
+     * @param g2d        obiekt Graphics2D
+     * @param iterations liczba iteracji
+     * @param x1         współrzędna x punktu początkowego
+     * @param y1         współrzędna y punktu początkowego
+     * @param x2         współrzędna x punktu końcowego
+     * @param y2         współrzędna y punktu końcowego
+     */
     private void drawKochSnowflake(Graphics2D g2d, int iterations, double x1, double y1, double x2, double y2) {
         if (iterations == 0) {
             g2d.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
@@ -64,10 +95,14 @@ public class KochSnowflake extends Fractal {
         }
     }
 
+    /**
+     * Maluje komponent fraktala.
+     *
+     * @param g obiekt Graphics
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, this);
     }
 }
-

@@ -3,6 +3,9 @@ package fractals;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * Klasa reprezentująca fraktal paproci Barnsley'a.
+ */
 public class BarnsleyFern extends Fractal {
 
     private static final double[][] transformations = {
@@ -14,6 +17,12 @@ public class BarnsleyFern extends Fractal {
     private static final double[] probabilities = {0.01, 0.85, 0.07, 0.07};
     private Random random;
 
+    /**
+     * Konstruktor paproci Barnsley'a o podanej szerokości i wysokości.
+     *
+     * @param width  szerokość fraktala
+     * @param height wysokość fraktala
+     */
     public BarnsleyFern(int width, int height) {
         super(width, height);
         this.random = new Random();
@@ -22,6 +31,14 @@ public class BarnsleyFern extends Fractal {
         generateFractal();
     }
 
+    /**
+     * Konstruktor paproci Barnsley'a o podanych parametrach.
+     *
+     * @param width         szerokość fraktala
+     * @param height        wysokość fraktala
+     * @param maxIterations maksymalna liczba iteracji
+     * @param color         schemat kolorów fraktala
+     */
     public BarnsleyFern(int width, int height, int maxIterations, int color) {
         super(width, height);
         this.random = new Random();
@@ -31,16 +48,18 @@ public class BarnsleyFern extends Fractal {
         generateFractal();
     }
 
+    /**
+     * Generuje fraktal paproci Barnsley'a.
+     */
     @Override
     public void generateFractal() {
-        // Clear the image before generating the fractal
         Graphics2D g2d = image.createGraphics();
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, width, height);
 
         double x = 0, y = 0;
 
-        for (int i = 0; i < 10000*maxIterations; i++) {
+        for (int i = 0; i < 10000 * maxIterations; i++) {
             double randomValue = random.nextDouble();
             double cumulativeProbability = 0.0;
             int transformationIndex = 0;
@@ -57,17 +76,20 @@ public class BarnsleyFern extends Fractal {
             x = newX;
             y = newY;
 
-            // Transform to screen coordinates
             int pixelX = (int) ((x - offsetX) * zoom + width / 2);
             int pixelY = (int) ((height / 2) - (y + offsetY) * zoom)+250;
 
             if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
-                if(color==1)color=-1;
-                image.setRGB(pixelX, pixelY, color);
+                image.setRGB(pixelX, pixelY, Color.GREEN.getRGB());
             }
         }
     }
 
+    /**
+     * Maluje komponent fraktala.
+     *
+     * @param g obiekt Graphics
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

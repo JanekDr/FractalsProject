@@ -3,7 +3,17 @@ package fractals;
 import java.awt.*;
 import java.awt.geom.Line2D;
 
+/**
+ * Klasa reprezentująca fraktal krzywej smoka.
+ */
 public class DragonCurve extends Fractal {
+
+    /**
+     * Konstruktor krzywej smoka o podanej szerokości i wysokości.
+     *
+     * @param width  szerokość fraktala
+     * @param height wysokość fraktala
+     */
     public DragonCurve(int width, int height) {
         super(width, height);
         this.zoom = 1.2;
@@ -11,6 +21,14 @@ public class DragonCurve extends Fractal {
         generateFractal();
     }
 
+    /**
+     * Konstruktor krzywej smoka o podanych parametrach.
+     *
+     * @param width         szerokość fraktala
+     * @param height        wysokość fraktala
+     * @param maxIterations maksymalna liczba iteracji
+     * @param color         schemat kolorów fraktala
+     */
     public DragonCurve(int width, int height, int maxIterations, int color) {
         super(width, height);
         this.zoom = 1.0;
@@ -19,11 +37,14 @@ public class DragonCurve extends Fractal {
         generateFractal();
     }
 
+    /**
+     * Generuje fraktal krzywej smoka.
+     */
     @Override
     public void generateFractal() {
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        if(color==1)color=-1;
+        if (color == 1) color = -1;
         g2d.setColor(new Color(color));
         g2d.fillRect(0, 0, width, height);
         g2d.setColor(Color.BLACK);
@@ -35,6 +56,16 @@ public class DragonCurve extends Fractal {
         drawDragonCurve(g2d, startX, startY, endX, endY, maxIterations);
     }
 
+    /**
+     * Rysuje krzywą smoka.
+     *
+     * @param g2d        obiekt Graphics2D
+     * @param x1         współrzędna x punktu początkowego
+     * @param y1         współrzędna y punktu początkowego
+     * @param x2         współrzędna x punktu końcowego
+     * @param y2         współrzędna y punktu końcowego
+     * @param iterations liczba iteracji
+     */
     private void drawDragonCurve(Graphics2D g2d, double x1, double y1, double x2, double y2, int iterations) {
         if (iterations == 0) {
             double scaledX1 = (x1 - offsetX) * zoom;
@@ -51,6 +82,11 @@ public class DragonCurve extends Fractal {
         }
     }
 
+    /**
+     * Maluje komponent fraktala.
+     *
+     * @param g obiekt Graphics
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

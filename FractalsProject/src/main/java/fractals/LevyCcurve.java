@@ -3,8 +3,17 @@ package fractals;
 import java.awt.*;
 import java.awt.geom.Line2D;
 
+/**
+ * Klasa reprezentująca fraktal krzywej Lévy'ego.
+ */
 public class LevyCcurve extends Fractal {
 
+    /**
+     * Konstruktor krzywej Lévy'ego o podanej szerokości i wysokości.
+     *
+     * @param width  szerokość fraktala
+     * @param height wysokość fraktala
+     */
     public LevyCcurve(int width, int height) {
         super(width, height);
         this.maxIterations = 12;
@@ -12,6 +21,14 @@ public class LevyCcurve extends Fractal {
         generateFractal();
     }
 
+    /**
+     * Konstruktor krzywej Lévy'ego o podanych parametrach.
+     *
+     * @param width         szerokość fraktala
+     * @param height        wysokość fraktala
+     * @param maxIterations maksymalna liczba iteracji
+     * @param color         schemat kolorów fraktala
+     */
     public LevyCcurve(int width, int height, int maxIterations, int color) {
         super(width, height);
         this.maxIterations = maxIterations;
@@ -20,17 +37,20 @@ public class LevyCcurve extends Fractal {
         generateFractal();
     }
 
+    /**
+     * Generuje fraktal krzywej Lévy'ego.
+     */
     @Override
     public void generateFractal() {
         Graphics2D g2d = image.createGraphics();
-        if(color==1)color=-1;
+        if (color == 1) color = -1;
         g2d.setColor(new Color(color));
         g2d.fillRect(0, 0, width, height);
         g2d.setColor(Color.BLACK);
 
-        double x1 = (width / 4.0 - offsetX)*zoom;
+        double x1 = (width / 4.0 - offsetX) * zoom;
         double y1 = (height / 2.0 - offsetY);
-        double x2 = (3 * width / 4.0 - offsetX)*zoom;
+        double x2 = (3 * width / 4.0 - offsetX) * zoom;
         double y2 = (height / 2.0 - offsetY);
 
         drawLevyCurve(g2d, maxIterations, x1, y1, x2, y2);
@@ -38,6 +58,16 @@ public class LevyCcurve extends Fractal {
         g2d.dispose();
     }
 
+    /**
+     * Rysuje krzywą Lévy'ego.
+     *
+     * @param g2d        obiekt Graphics2D
+     * @param iterations liczba iteracji
+     * @param x1         współrzędna x punktu początkowego
+     * @param y1         współrzędna y punktu początkowego
+     * @param x2         współrzędna x punktu końcowego
+     * @param y2         współrzędna y punktu końcowego
+     */
     private void drawLevyCurve(Graphics2D g2d, int iterations, double x1, double y1, double x2, double y2) {
         if (iterations == 0) {
             g2d.draw(new Line2D.Double(x1, y1, x2, y2));
@@ -50,6 +80,11 @@ public class LevyCcurve extends Fractal {
         }
     }
 
+    /**
+     * Maluje komponent fraktala.
+     *
+     * @param g obiekt Graphics
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

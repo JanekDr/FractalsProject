@@ -3,27 +3,47 @@ package fractals;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-
+/**
+ * Klasa reprezentująca fraktal trójkąta Sierpińskiego.
+ */
 public class SierpinskiTriangle extends Fractal {
+
+    /**
+     * Konstruktor trójkąta Sierpińskiego o podanej szerokości i wysokości.
+     *
+     * @param width  szerokość fraktala
+     * @param height wysokość fraktala
+     */
     public SierpinskiTriangle(int width, int height) {
         super(width, height);
         this.maxIterations = 7;
-        this.zoom=0.9;
+        this.zoom = 0.9;
         generateFractal();
     }
 
+    /**
+     * Konstruktor trójkąta Sierpińskiego o podanych parametrach.
+     *
+     * @param width         szerokość fraktala
+     * @param height        wysokość fraktala
+     * @param maxIterations maksymalna liczba iteracji
+     * @param color         schemat kolorów fraktala
+     */
     public SierpinskiTriangle(int width, int height, int maxIterations, int color) {
         super(width, height);
         this.maxIterations = maxIterations;
-        this.zoom=0.9;
+        this.zoom = 0.9;
         this.color = color;
         generateFractal();
     }
 
+    /**
+     * Generuje fraktal trójkąta Sierpińskiego.
+     */
     @Override
     public void generateFractal() {
         Graphics2D g2d = image.createGraphics();
-        if(color==1)color=-1;
+        if (color == 1) color = -1;
         g2d.setColor(new Color(color));
         g2d.fillRect(0, 0, width, height);
         g2d.setColor(Color.BLACK);
@@ -42,10 +62,17 @@ public class SierpinskiTriangle extends Fractal {
         p3.y -= offsetY;
 
         generateSierpinskiTriangle(g2d, maxIterations, p1, p2, p3);
-
-
     }
 
+    /**
+     * Rysuje trójkąt Sierpińskiego.
+     *
+     * @param g     obiekt Graphics2D
+     * @param depth głębokość rekurencji
+     * @param p1    pierwszy wierzchołek trójkąta
+     * @param p2    drugi wierzchołek trójkąta
+     * @param p3    trzeci wierzchołek trójkąta
+     */
     private void generateSierpinskiTriangle(Graphics2D g, int depth, Point2D.Double p1, Point2D.Double p2, Point2D.Double p3) {
         if (depth == 0) {
             Polygon triangle = new Polygon();
@@ -64,19 +91,25 @@ public class SierpinskiTriangle extends Fractal {
         }
     }
 
+    /**
+     * Oblicza środek dwóch punktów.
+     *
+     * @param p1 pierwszy punkt
+     * @param p2 drugi punkt
+     * @return środek dwóch punktów
+     */
     private Point2D.Double midpoint(Point2D.Double p1, Point2D.Double p2) {
         return new Point2D.Double((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
     }
 
+    /**
+     * Maluje komponent fraktala.
+     *
+     * @param g obiekt Graphics
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
     }
 }
-
-
-
-
-
-
