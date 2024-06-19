@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Mandelbrot Set");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new fractals.DragonCurve(800,600));
+        frame.getContentPane().add(new fractals.LevyCcurve(800,600));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

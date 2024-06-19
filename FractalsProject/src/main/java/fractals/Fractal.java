@@ -8,6 +8,7 @@ public abstract class Fractal extends JPanel {
     protected int width;
     protected int height;
     protected double zoom;
+    protected int color;
     protected double offsetX;
     protected double offsetY;
     protected int maxIterations;
@@ -21,6 +22,7 @@ public abstract class Fractal extends JPanel {
         this.zoom = 150;
         this.offsetX = 0;
         this.offsetY = 0;
+        this.color = 1;
         this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         this.mouseHandler = new MouseHandler(this);
         addMouseListener(mouseHandler);

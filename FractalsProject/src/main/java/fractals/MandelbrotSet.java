@@ -10,10 +10,11 @@ public class MandelbrotSet extends Fractal{
         generateFractal();
     }
 
-    public MandelbrotSet(int width, int height, int maxIterations) {
+    public MandelbrotSet(int width, int height, int maxIterations, int color) {
         super(width, height);
-        this.maxIterations = maxIterations;
+        this.maxIterations = 1000*maxIterations;
         this.zoom=250;
+        this.color=color;
         generateFractal();
     }
 
@@ -26,9 +27,12 @@ public class MandelbrotSet extends Fractal{
                 int iter = calculateEscapeTime(cX, cY);
                 if (iter > 0) {
                     double ratio = (double) iter / maxIterations;
-                    int color = Color.HSBtoRGB(0.7f + 10 * (float) Math.sqrt(ratio), 1f, 1f);
-//                    int color = Color.RED.getRGB();
-                    image.setRGB(x, y, color);
+                    if(color==1){
+                        int pixelColor = Color.HSBtoRGB(0.7f + 10 * (float) Math.sqrt(ratio), 1f, 1f);
+                        image.setRGB(x,y,pixelColor);
+                    }else{
+                        image.setRGB(x,y,color);
+                    }
                 } else {
                     image.setRGB(x, y, Color.BLACK.getRGB());
                 }

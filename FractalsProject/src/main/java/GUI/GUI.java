@@ -12,11 +12,11 @@ public class GUI extends JFrame {
     private JComboBox<String> Fractal_list;
     private JComboBox<String> Color_list;
     private JComboBox<String> JuliaConstant_list;
-
     private JLabel levels;
     private JTextField levels_text_field;
     private JLabel text_Color;
     private JLabel JuliaConstant_label;
+    private JLabel fractalListLabel;
     private JCheckBox AutoScroll_CheckBox;
     private JButton Submit_button;
     private Fractal fractalPanel;
@@ -53,37 +53,31 @@ public class GUI extends JFrame {
         setSize(1200,800);
         setLayout(null);
 
-        Fractal_list = CreateComboBox(new String[]{"MandelbrotSet", "BarnsleyFern", "DragonCurve", "JuliaSet", "KochSnowflake", "LevyCurve", "SierpinskiTriangle"},
-                20,30,200,30);
+        fractalListLabel = CreateLabel("Wybor fraktala",75,55,200,25);
+        Fractal_list = CreateComboBox(new String[]{"MandelbrotSet", "BarnsleyFern", "DragonCurve", "JuliaSet", "KochSnowflake", "LevyCcurve", "SierpinskiTriangle"},
+                20,80,200,30);
+        add(fractalListLabel);
         add(Fractal_list);
 
-        levels = CreateLabel("Poziom",95,75,200,25);
-        levels_text_field = CreateTextField(20,100,200,25);
+        levels = CreateLabel("Poziom",95,175,200,25);
+        levels_text_field = CreateTextField(20,200,200,25);
         add(levels);
         add(levels_text_field);
 
-        text_Color = CreateLabel("Kolor",95,175,200,25);
-        Color_list = CreateComboBox(new String[]{"Gradient", "Bialy", "Czerwony", "Niebieski", "Zielony"},
-                20,200,200,25);
+        text_Color = CreateLabel("Kolor",95,295,200,25);
+        Color_list = CreateComboBox(new String[]{"Domyslny", "Bialy", "Czerwony", "Niebieski", "Zielony"},
+                20,320,200,25);
         add(text_Color);
         add(Color_list);
 
-
-
-        AutoScroll_CheckBox = new JCheckBox();
-        AutoScroll_CheckBox.setText("Auto przyblizanie");
-        AutoScroll_CheckBox.setFocusable(false);
-        AutoScroll_CheckBox.setBounds(60,275,100,25);
-        add(AutoScroll_CheckBox);
-
         JuliaConstant_label = CreateLabel("<html>Stale liczby zespolone<br> dla zbioru Julii (beda dostepne<br>po wyborze tego fraktalu)</html>"
-                , 20, 450, 200, 50);
+                , 20, 400, 200, 50);
         JuliaConstant_list = CreateComboBox(new String[]{
                 "c = -0.7 + 0.27015i",
                 "c = 0.355 + 0.355i",
                 "c = -0.4 + 0.6i",
                 "c = -0.73 + 0.19i"
-        }, 20, 500, 200, 25);
+        }, 20, 450, 200, 25);
         add(JuliaConstant_label);
         add(JuliaConstant_list);
         JuliaConstant_list.setEnabled(false);
@@ -112,96 +106,45 @@ public class GUI extends JFrame {
 
     private void updateFractal() {
         int maxIterations;
-
         String fractalName = Fractal_list.getSelectedItem().toString();
         getContentPane().remove(fractalPanel);
         String colorName = Color_list.getSelectedItem().toString();
-        System.out.println(colorName);
-
+        int colorParameter = getSelectedColor(colorName);
         try{
             maxIterations = Integer.parseInt(levels_text_field.getText());
-            System.out.println(maxIterations);
         } catch (Exception noValue){
-            maxIterations = 0;
-            System.out.println(maxIterations);
+            maxIterations = 1;
         }
+        System.out.println(colorName);
         System.out.println(fractalName);
-
+        System.out.println(maxIterations);
+        System.out.println(colorParameter);
         JuliaConstant_list.setEnabled(false);
         switch (fractalName) {
             case "MandelbrotSet":
-                if(maxIterations!=0){
-                    fractalPanel = new MandelbrotSet(900, 750, maxIterations);
-                }else {
-                    fractalPanel = new MandelbrotSet(900, 750);
-                }
+                fractalPanel = new MandelbrotSet(900, 750, maxIterations,colorParameter);
                 break;
             case "BarnsleyFern":
-                if(maxIterations!=0){
-                    fractalPanel = new BarnsleyFern(900, 750, maxIterations);
-                }else {
-                    fractalPanel = new BarnsleyFern(900, 750);
-                }
+                fractalPanel = new BarnsleyFern(900, 750, maxIterations, colorParameter);
                 break;
             case "DragonCurve":
-                if(maxIterations!=0){
-                    fractalPanel = new DragonCurve(900, 750, maxIterations);
-                }else {
-                    fractalPanel = new DragonCurve(900, 750);
-                }
+                fractalPanel = new DragonCurve(900, 750, maxIterations, colorParameter);
                 break;
             case "JuliaSet":
                 JuliaConstant_list.setEnabled(true);
-
-                String selectedConstant = (String) JuliaConstant_list.getSelectedItem();
-                double cRe=-0.7;;
-                double cIm=0.27015;
-                switch (selectedConstant) {
-                    case "c = -0.7 + 0.27015i":
-                        cRe = -0.7;
-                        cIm = 0.27015;
-                        break;
-                    case "c = 0.355 + 0.355i":
-                        cRe = 0.355;
-                        cIm = 0.355;
-                        break;
-                    case "c = -0.4 + 0.6i":
-                        cRe = -0.4;
-                        cIm = 0.6;
-                        break;
-                    case "c = -0.73 + 0.19i":
-                        cRe = -0.73;
-                        cIm = 0.19;
-                        break;
-                }
-                System.out.println(cRe+" "+ cIm);
-                if(maxIterations!=0){
-                    fractalPanel = new JuliaSet(900, 750, cRe, cIm, maxIterations);
-                }else {
-                    fractalPanel = new JuliaSet(900, 750, cRe, cIm);
-                }
-
+                double[] constant =getSelectedConstant(String.valueOf(JuliaConstant_list.getSelectedItem()));
+                double cRe = constant[0];
+                double cIm = constant[1];
+                fractalPanel = new JuliaSet(900, 750, cRe, cIm, maxIterations, colorParameter);
                 break;
             case "KochSnowflake":
-                if(maxIterations!=0){
-                    fractalPanel = new KochSnowflake(900, 750, maxIterations);
-                }else {
-                    fractalPanel = new KochSnowflake(900, 750);
-                }
+                fractalPanel = new KochSnowflake(900, 750, maxIterations, colorParameter);
                 break;
             case "LevyCcurve":
-                if(maxIterations!=0){
-                    fractalPanel = new LevyCcurve(900, 750, maxIterations);
-                }else {
-                    fractalPanel = new LevyCcurve(900, 750);
-                }
+                fractalPanel = new LevyCcurve(900, 750, maxIterations, colorParameter);
                 break;
             case "SierpinskiTriangle":
-                if(maxIterations!=0){
-                    fractalPanel = new SierpinskiTriangle(900, 750, maxIterations);
-                }else {
-                    fractalPanel = new SierpinskiTriangle(900, 750);
-                }
+                fractalPanel = new SierpinskiTriangle(900, 750, maxIterations, colorParameter);
                 break;
         }
         levels_text_field.setText("");
@@ -209,11 +152,10 @@ public class GUI extends JFrame {
         add(fractalPanel);
         repaint();
     }
-    private int selectedColor(){
-        String selectedColor = (String) Color_list.getSelectedItem();
-        int color=0;
-        switch (selectedColor){
-            case "Gradient":
+    private int getSelectedColor(String colorName){
+        int color=1;
+        switch (colorName){
+            case "Domyslny":
                 color=1;
                 break;
             case "Bialy":
@@ -230,6 +172,35 @@ public class GUI extends JFrame {
                 break;
         }
         return color;
+    }
+    private double[] getSelectedConstant(String selectedConstant){
+        double[] constant= {-0.7,0.27015};
+        double cRe;
+        double cIm;
+        System.out.println(selectedConstant);
+        switch (selectedConstant) {
+            case "c = -0.7 + 0.27015i":
+                cRe = -0.7;
+                cIm = 0.27015;
+                constant = new double[]{cRe, cIm};
+                break;
+            case "c = 0.355 + 0.355i":
+                cRe = 0.355;
+                cIm = 0.355;
+                constant = new double[]{cRe, cIm};
+                break;
+            case "c = -0.4 + 0.6i":
+                cRe = -0.4;
+                cIm = 0.6;
+                constant = new double[]{cRe, cIm};
+                break;
+            case "c = -0.73 + 0.19i":
+                cRe = -0.73;
+                cIm = 0.19;
+                constant = new double[]{cRe, cIm};
+                break;
+        }
+        return constant;
     }
     public static void main(String[] args) {
         new GUI();

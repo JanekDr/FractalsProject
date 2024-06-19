@@ -4,7 +4,7 @@ import java.awt.*;
 
 
 public class JuliaSet extends Fractal {
-    private double cRe, cIm; // Constants for the Julia set
+    private double cRe, cIm;
 
     public JuliaSet(int width, int height) {
         super(width, height);
@@ -23,12 +23,13 @@ public class JuliaSet extends Fractal {
         this.cIm = cIm;
         generateFractal();
     }
-    public JuliaSet(int width, int height, double cRe, double cIm, int maxIterations) {
+    public JuliaSet(int width, int height, double cRe, double cIm, int maxIterations, int color) {
         super(width, height);
         this.zoom=250;
         this.maxIterations = 1000*maxIterations;
         this.cRe = cRe;
         this.cIm = cIm;
+        this.color = color;
         generateFractal();
     }
 
@@ -39,7 +40,7 @@ public class JuliaSet extends Fractal {
                 double zx = (x - width / 2) / zoom  + offsetX;
                 double zy = (y - height / 2) / zoom + offsetY;
                 float i = maxIterations;
-                while (zx * zx + zy * zy < 4 && i > 0) {
+                while(zx * zx + zy * zy < 4 && i > 0) {
                     double tmp = zx * zx - zy * zy + cRe;
                     zy = 2.0 * zx * zy + cIm;
                     zx = tmp;
@@ -47,9 +48,14 @@ public class JuliaSet extends Fractal {
                 }
                 if(i>0){
                     double ratio = (double) i / maxIterations;
-                    int color = Color.HSBtoRGB(0.7f + 10 * (float) Math.sqrt(ratio), 1f, 1f);
-//                    int color = Color.HSBtoRGB(1f,1f,1f);
-                    image.setRGB(x, y, color);
+                    if(color==1){
+                        int pixelColor = Color.HSBtoRGB(0.7f + 10 * (float) Math.sqrt(ratio), 1f, 1f);
+                        image.setRGB(x,y,pixelColor);
+                    }else{
+                        image.setRGB(x,y,color);
+                    }
+                } else {
+                    image.setRGB(x, y, Color.BLACK.getRGB());
                 }
             }
         }

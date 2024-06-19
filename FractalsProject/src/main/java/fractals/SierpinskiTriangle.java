@@ -5,27 +5,28 @@ import java.awt.geom.Point2D;
 
 
 public class SierpinskiTriangle extends Fractal {
-
-    public SierpinskiTriangle(int width, int height, int maxIterations) {
-        super(width, height);
-        this.maxIterations = maxIterations;
-        this.zoom=1;
-        generateFractal();
-    }
-
     public SierpinskiTriangle(int width, int height) {
         super(width, height);
         this.maxIterations = 7;
-        this.zoom=1;
+        this.zoom=0.9;
+        generateFractal();
+    }
+
+    public SierpinskiTriangle(int width, int height, int maxIterations, int color) {
+        super(width, height);
+        this.maxIterations = maxIterations;
+        this.zoom=0.9;
+        this.color = color;
         generateFractal();
     }
 
     @Override
     public void generateFractal() {
-        Graphics2D g = image.createGraphics();
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, width, height);
-        g.setColor(Color.WHITE);
+        Graphics2D g2d = image.createGraphics();
+        if(color==1)color=-1;
+        g2d.setColor(new Color(color));
+        g2d.fillRect(0, 0, width, height);
+        g2d.setColor(Color.BLACK);
 
         double size = Math.min(width, height) * zoom;
 
@@ -40,7 +41,7 @@ public class SierpinskiTriangle extends Fractal {
         p3.x -= offsetX;
         p3.y -= offsetY;
 
-        generateSierpinskiTriangle(g, maxIterations, p1, p2, p3);
+        generateSierpinskiTriangle(g2d, maxIterations, p1, p2, p3);
 
 
     }

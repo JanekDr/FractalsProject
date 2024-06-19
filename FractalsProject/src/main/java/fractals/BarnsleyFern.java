@@ -22,11 +22,12 @@ public class BarnsleyFern extends Fractal {
         generateFractal();
     }
 
-    public BarnsleyFern(int width, int height, int maxIterations) {
+    public BarnsleyFern(int width, int height, int maxIterations, int color) {
         super(width, height);
         this.random = new Random();
         this.zoom = 50;
         this.maxIterations = maxIterations;
+        this.color = color;
         generateFractal();
     }
 
@@ -61,7 +62,8 @@ public class BarnsleyFern extends Fractal {
             int pixelY = (int) ((height / 2) - (y + offsetY) * zoom)+250;
 
             if (pixelX >= 0 && pixelX < width && pixelY >= 0 && pixelY < height) {
-                image.setRGB(pixelX, pixelY, Color.GREEN.getRGB());
+                if(color==1)color=-1;
+                image.setRGB(pixelX, pixelY, color);
             }
         }
     }

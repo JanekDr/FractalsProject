@@ -10,18 +10,21 @@ public class KochSnowflake extends Fractal {
         generateFractal();
     }
 
-    public KochSnowflake(int width, int height, int maxIterations) {
+    public KochSnowflake(int width, int height, int maxIterations, int color) {
         super(width, height);
         this.maxIterations = maxIterations;
+        this.zoom = 0.8;
+        this.color = color;
         generateFractal();
     }
 
     @Override
     public void generateFractal() {
         Graphics2D g2d = image.createGraphics();
-        g2d.setColor(Color.BLACK);
+        if(color==1)color=-1;
+        g2d.setColor(new Color(color));
         g2d.fillRect(0, 0, width, height);
-        g2d.setColor(Color.WHITE);
+        g2d.setColor(Color.BLACK);
 
         double size = Math.min(width, height) * zoom;
         double x1 = width / 2 - size / 2 - offsetX;

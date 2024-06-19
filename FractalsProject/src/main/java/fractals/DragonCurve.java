@@ -11,10 +11,11 @@ public class DragonCurve extends Fractal {
         generateFractal();
     }
 
-    public DragonCurve(int width, int height, int maxIterations) {
+    public DragonCurve(int width, int height, int maxIterations, int color) {
         super(width, height);
         this.zoom = 1.0;
         this.maxIterations = maxIterations;
+        this.color = color;
         generateFractal();
     }
 
@@ -22,10 +23,10 @@ public class DragonCurve extends Fractal {
     public void generateFractal() {
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(Color.BLACK);
+        if(color==1)color=-1;
+        g2d.setColor(new Color(color));
         g2d.fillRect(0, 0, width, height);
-        g2d.setColor(Color.WHITE);
-
+        g2d.setColor(Color.BLACK);
         double startX = width / 3.0;
         double startY = height / 3.0;
         double endX = startX + 300;

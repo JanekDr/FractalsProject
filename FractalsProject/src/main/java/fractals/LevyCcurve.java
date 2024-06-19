@@ -1,43 +1,52 @@
 package fractals;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.geom.Line2D;
 
 public class LevyCcurve extends Fractal {
 
     public LevyCcurve(int width, int height) {
         super(width, height);
-        this.maxIterations = 10;
+        this.maxIterations = 12;
+        this.zoom = 0.9;
         generateFractal();
     }
-    public LevyCcurve(int width, int height, int maxIterations) {
+
+    public LevyCcurve(int width, int height, int maxIterations, int color) {
         super(width, height);
         this.maxIterations = maxIterations;
+        this.zoom = 0.8;
+        this.color = color;
         generateFractal();
     }
 
     @Override
     public void generateFractal() {
-        Graphics2D g = image.createGraphics();
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, width, height);
-        g.setColor(Color.WHITE);
-        drawLevyCCurve(g, width / 2, height / 2, 200, 0, maxIterations);
-        g.dispose();
+        Graphics2D g2d = image.createGraphics();
+        if(color==1)color=-1;
+        g2d.setColor(new Color(color));
+        g2d.fillRect(0, 0, width, height);
+        g2d.setColor(Color.BLACK);
+
+        double x1 = (width / 4.0 - offsetX)*zoom;
+        double y1 = (height / 2.0 - offsetY);
+        double x2 = (3 * width / 4.0 - offsetX)*zoom;
+        double y2 = (height / 2.0 - offsetY);
+
+        drawLevyCurve(g2d, maxIterations, x1, y1, x2, y2);
+
+        g2d.dispose();
     }
 
-    private void drawLevyCCurve(Graphics2D g, double x, double y, double length, double angle, int iteration) {
-        if (iteration == 0) {
-            double xEnd = x + length * Math.cos(angle);
-            double yEnd = y - length * Math.sin(angle);
-            g.drawLine((int)x, (int)y, (int)xEnd, (int)yEnd);
+    private void drawLevyCurve(Graphics2D g2d, int iterations, double x1, double y1, double x2, double y2) {
+        if (iterations == 0) {
+            g2d.draw(new Line2D.Double(x1, y1, x2, y2));
         } else {
-            length /= Math.sqrt(2);
-            iteration--;
-            drawLevyCCurve(g, x, y, length, angle + Math.PI / 4, iteration);
-            double xMid = x + length * Math.cos(angle + Math.PI / 4);
-            double yMid = y - length * Math.sin(angle + Math.PI / 4);
-            drawLevyCCurve(g, xMid, yMid, length, angle - Math.PI / 4, iteration);
+            double midX = (x1 + x2) / 2 + (y2 - y1) / 2;
+            double midY = (y1 + y2) / 2 - (x2 - x1) / 2;
+
+            drawLevyCurve(g2d, iterations - 1, x1, y1, midX, midY);
+            drawLevyCurve(g2d, iterations - 1, midX, midY, x2, y2);
         }
     }
 
