@@ -18,10 +18,7 @@ public class GUI extends JFrame {
     private JLabel text_Color;
     private JLabel JuliaConstant_label;
     private JCheckBox AutoScroll_CheckBox;
-    private ImageIcon xIcon;
-    private ImageIcon checkIcon;
     private JButton Submit_button;
-    private JButton Scroll_Submit_Button;
     private Fractal fractalPanel;
 
     private static JComboBox<String> CreateComboBox(String[] options,int x, int y, int width, int height){
@@ -74,12 +71,8 @@ public class GUI extends JFrame {
 
 
         AutoScroll_CheckBox = new JCheckBox();
-        checkIcon = new ImageIcon("YES.png");
-        xIcon = new ImageIcon("images.png");
         AutoScroll_CheckBox.setText("Auto przyblizanie");
         AutoScroll_CheckBox.setFocusable(false);
-        //AutoScroll_CheckBox.setIcon(xIcon);
-        //AutoScroll_CheckBox.setSelectedIcon(checkIcon);
         AutoScroll_CheckBox.setBounds(60,275,100,25);
         add(AutoScroll_CheckBox);
 
@@ -221,7 +214,7 @@ public class GUI extends JFrame {
         int color=0;
         switch (selectedColor){
             case "Gradient":
-                color=1; //symbol dla gradientu
+                color=1;
                 break;
             case "Bialy":
                 color = Color.WHITE.getRGB();
