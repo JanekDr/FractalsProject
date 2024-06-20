@@ -43,4 +43,7 @@ public abstract class Fractal extends JPanel {
      * Abstrakcyjna metoda do generowania fraktala.
      */
     public abstract void generateFractal();
+    public double getZoom() {
+        return zoom;
+    }
 }

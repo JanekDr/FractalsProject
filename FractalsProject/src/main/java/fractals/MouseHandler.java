@@ -1,5 +1,8 @@
 package fractals;
 
+import GUI.GUI;
+
+import javax.swing.*;
 import java.awt.event.*;
 
 /**
@@ -86,6 +89,7 @@ public class MouseHandler extends MouseAdapter {
         }
         fractal.generateFractal();
         fractal.repaint();
+        ((GUI)SwingUtilities.getWindowAncestor(fractal)).updateZoomLabel();
     }
 
     /**

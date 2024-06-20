@@ -19,9 +19,10 @@ public class GUI extends JFrame {
     private JLabel text_Color;
     private JLabel JuliaConstant_label;
     private JLabel fractalListLabel;
-    private JCheckBox AutoScroll_CheckBox;
     private JButton Submit_button;
     private Fractal fractalPanel;
+    private JLabel zoomLabel;
+
 
     /**
      * Tworzy JComboBox z podanymi opcjami i ustawia jego pozycję i rozmiar.
@@ -134,6 +135,9 @@ public class GUI extends JFrame {
         fractalPanel.setBounds(250, 30, 900, 700);
         add(fractalPanel);
 
+        zoomLabel = CreateLabel("Zoom: 1.0", 700, 10, 100, 25);
+        add(zoomLabel);
+
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
@@ -151,6 +155,7 @@ public class GUI extends JFrame {
      */
     private void updateFractal() {
         int maxIterations;
+        zoomLabel.setText("Zoom: 1.0");
         String fractalName = Fractal_list.getSelectedItem().toString();
         getContentPane().remove(fractalPanel);
         String colorName = Color_list.getSelectedItem().toString();
@@ -260,5 +265,8 @@ public class GUI extends JFrame {
                 break;
         }
         return constant;
+    }
+    public void updateZoomLabel() {
+        zoomLabel.setText(String.format("Zoom: %.2f", fractalPanel.getZoom()));
     }
 }
