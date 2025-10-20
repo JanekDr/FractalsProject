@@ -50,3 +50,14 @@ The program allows you to:
 - **Recursion & Iteration** – different fractal generation methods
 
 ---
+
+## 📸 More photos
+<img width="1180" height="789" alt="image" src="https://github.com/user-attachments/assets/f04366dd-8e45-4349-8bbe-2ced94905e18" />
+<img width="1183" height="791" alt="image" src="https://github.com/user-attachments/assets/540c1d2a-fd62-4e25-98f4-2ab5d93b66ac" />
+<img width="1178" height="786" alt="image" src="https://github.com/user-attachments/assets/50ce72ca-e3e8-4c67-916f-a3c958db4d63" />
+<img width="1178" height="783" alt="image" src="https://github.com/user-attachments/assets/a3a69441-9768-4b95-99e9-68120065aa7d" />
+<img width="1173" height="781" alt="image" src="https://github.com/user-attachments/assets/76545cb9-f35b-496f-abe9-f7e65f5d80e4" />
+<img width="1176" height="781" alt="image" src="https://github.com/user-attachments/assets/396de9f8-fe10-4121-bf83-ff0d7fcbc8d3" />
+<img width="1175" height="787" alt="image" src="https://github.com/user-attachments/assets/fb1362fa-6506-4b55-80cc-27c48cd6f7db" />
+<img width="1178" height="785" alt="image" src="https://github.com/user-attachments/assets/d47b9c86-1391-48f5-9d38-e8fc555d0552" />
+
